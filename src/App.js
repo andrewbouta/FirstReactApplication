@@ -5,10 +5,9 @@ import Menu from './components/MenuComponent';
 import { DISHES } from './shared/dishes';
 import { Component } from 'react';
 import { render } from '@testing-library/react';
+import DishDetail from './components/DishdetailComponent';
 
 //<script src="https://unpkg.com/react-popper/dist/index.umd.js"></script>
-
-
 
 class App extends Component {
 
@@ -29,9 +28,11 @@ class App extends Component {
           </div>
         </Navbar>
         <Menu dishes = {this.state.dishes}/>
+        {/*<DishDetail DishDetail = {this.state.DishDetail}/>*/}
       </div>
     );
   }
 }
 
 export default App;
+
