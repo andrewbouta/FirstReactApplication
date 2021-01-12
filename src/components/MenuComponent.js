@@ -1,73 +1,48 @@
-import React, { Component } from 'react';
-import { Media } from 'reactstrap';
-import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
-import DishDetail from './DishdetailComponent';
+import React from 'react';
+import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
-class Menu extends Component {
+// functional way
+function RenderMenuItem( { dish, onClick } ){
+  return (
+    <Card>
+      {/* back ticks used in line below */}
+      <Link to={`/menu/${dish.id}`}>
+        <CardImg width="100%" object src={dish.image} alt={dish.name}/>
+        <CardImgOverlay body className="ml-5">
+          <CardTitle heading>{dish.name}</CardTitle>
+        </CardImgOverlay>
+      </Link>
+    </Card>
+  );
+}
 
-    constructor(props) {
-        super(props);
+const Menu = (props) => {
+  const menu = props.dishes.map((dish) => {
+    return (
+      <div key={dish.id} className="col-12 col-md-5 m-1">
+        <RenderMenuItem dish={dish} />
+      </div>
+    );
+  });
 
-        // Define a state for component
-        this.state =  {
-            selectedDish: null
-        }
-        console.log('Menu Component constructor is invoked');
-    }
-
-    componentDidMount() {
-        console.log('Menu Component componentDidMount is invoked');
-    }
-
-    onDishSelect(dish) {
-        this.setState({ selectedDish: dish});
-    }
-
-    renderDish(dish) {
-        if (dish != null) {
-            return (
-               <DishDetail dish = {dish}/>
-            )
-
-        } else {
-            return (
-                <div> </div>
-            );
-        }
-    }
-
-    render() {
-        // iterate over all items in the array using 'map'
-        // for every dish, return the key
-        const menu = this.props.dishes.map((dish) =>  {
-            return (
-                <div key={dish.id} className="col-12 col-md-5 mt-5">
-                {/*After card is clicked, it is passed to onDishSelect()*/}
-                    <Card onClick={() => this.onDishSelect(dish)}>
-                        <CardImg width="100%" src={dish.image} alt={dish.name} />
-                        <CardImgOverlay>
-                            <CardTitle>{dish.name}</CardTitle>
-                        </CardImgOverlay>
-                    </Card>
-                </div>
-            );
-        });
-
-    
-        console.log('Menu Component render is invoked');
-
-        return ( 
-            <div className="container">
-                <div className="row">
-                    {menu} {/* JavaScript variable, using a const in this case */}
-                </div>
-                <div className="row">
-                    {this.renderDish(this.state.selectedDish)}
-                    {/*this.renderDish(this.state.dishDetail)*/}
-                </div>
-            </div>
-        );
-    }
+  return (
+    <div className="container">
+      <div className="row">
+        <Breadcrumb>
+          <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
+          <BreadcrumbItem active>Menu</BreadcrumbItem>
+        </Breadcrumb>
+        <div className="col-12">
+          <h3>Menu</h3>
+          <hr />
+        </div>
+      </div>
+      <div className="row">
+          {menu}
+      </div>
+    </div>
+  );
 }
 
 export default Menu;

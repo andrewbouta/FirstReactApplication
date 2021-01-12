@@ -1,17 +1,12 @@
-import { Component } from "react";
+import { Component } from 'react';
+import React from 'react';
 import { Media } from 'reactstrap';
 import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
+    //Constructor no longer needed
 
-class DishDetail extends Component {
-    constructor(props) {
-        super(props);
-
-        // Define a state for component
-        this.state =  { }
-        console.log('Dish Detail constructor is invoked');
-    }
-    renderDish(dish){
+    function RenderDish({dish}) {
         if (dish != null){
             return (
                 <Card>
@@ -27,14 +22,14 @@ class DishDetail extends Component {
         }
     }
 
-    renderComments(dish){
-        if (dish != null){
-            const comments = dish.comments.map(comment => {
+    function RenderComments({comments}) {
+        if (comments != null){
+            const comments = comments.map(comment => {
                 const date = new Date(comment.date);
                 return (
                     <li key={comment.id}>
                         <p>{comment.comment}</p>
-                        <p> -- {comment.author}, {date.toDateString()} </p>
+                        <p> -- {comment.author}, {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</p>
                     </li>
                 );
             });
@@ -43,19 +38,25 @@ class DishDetail extends Component {
             return( <div></div> );
         }
     }
-    render (){
+
+
+    const DishDetail = (props) => {
+        console.log('Dishdetail Component componentDidUpdate render is invoked.')
+        if (props.dish != null)
         return (
-            <div className="row">
-                <div className="col-12 col-md-5 m-1">
-                    {this.renderDish(this.props.dish)}
-                </div>
-                <div className="col-12 col-md-5 m-1">
-                    <h4>Comments</h4>
-                        {this.renderComments(this.props.dish)}
+            <div class="container">
+                <div className="row">
+                    <div className="col-12 col-md-5 m-1">
+                        <renderDish dish={props.dish} />
+                    </div>
+                    <div className="col-12 col-md-5 m-1">
+                        <h4>Comments</h4>
+                            <renderComments comments={props.dish.comments} />
+                    </div>
                 </div>
             </div>
-        );
+        ); else
+        return null;
     }
-}
 
 export default DishDetail;
