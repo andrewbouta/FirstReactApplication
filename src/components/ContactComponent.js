@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, Col, FormFeedback } from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, Col, Row} from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Control, Errors, actions } from 'react-redux-form';
 
@@ -15,11 +15,9 @@ class Contact extends Component {
     super(props)
   }
 
-  // use arrow function, no need bind in constructor
   handleSubmit = (values) => {
     console.log('Current State is: ' + JSON.stringify(values))
     alert('Current State is: ' + JSON.stringify(values))
-    this.props.resetFeedbackForm()
   }
 
   render() {
